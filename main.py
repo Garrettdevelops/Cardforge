@@ -20,19 +20,11 @@ def main():
     dict_list = file_read()    
     
     for dict in dict_list:
-        for key in dict:
-            answer = input(f"Question: {key}")
-            if answer == dict[key]:
-                print(f"your answer {answer} was correct!")
-            else:
-                print(f"your answer {answer} was incorrect! The correct answer is {dict[key]}.")
+        answer = input(f"Question: {dict['question']}\n")
+        if answer == dict['correct_answer']:
+            print(f"your answer {answer} was correct! Good job!")
+        else: 
+            print(f"your answer {answer} was incorrect! The correct answer was {dict['correct_answer']}!")
 
 if __name__ == "__main__":
     main()
-
- #
- #   if answer == correct_answer:
-#
- #   else: 
-
-   #answer = input(question + "\n")
