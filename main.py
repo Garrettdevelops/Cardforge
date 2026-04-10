@@ -48,10 +48,14 @@ class card():
 
 def pull_json():
     json_file = "cards.json"
+
     if os.path.exists(os.path.join(".", json_file)):
-        with open(json_file, 'r') as f:
-            data = json.load(f)
-        return(data)
+        try:
+            with open(json_file, 'r') as f:
+                data = json.load(f)
+            return(data)
+        except json.JSONDecodeError:
+            return(None)
     else:
         return(None)
 
@@ -71,16 +75,24 @@ def file_read():
 
 def main():
     dict_list = None
-    if pull_json() == None:
-        dict_list = file_read()    
-    else: 
-        dict_list = pull_json()
     dump_arr = []
 
-    for dict in dict_list:
-        dict = card(dict['question'],dict['correct_answer'],dict['num_incorrect'],dict['num_correct'])
-        dict.ask()
-        dump_arr.append(dict.dump())
+    if pull_json() == None:
+        dict_list = file_read()    
+        
+        for dict in dict_list:
+            dict = card(dict['question'],dict['correct_answer'])
+            dict.ask()
+            dump_arr.append(dict.dump())
+           
+    else: 
+        dict_list = pull_json()
+
+        for dict in dict_list: #there is some problems here if JSON exists then we need slightly different logic so we need to split them out to solve the error
+            dict = card(dict['question'],dict['correct_answer'],dict['num_incorrect'],dict['num_correct'])
+            dict.ask()
+            dump_arr.append(dict.dump())
+
     push_json(dump_arr)
 
 if __name__ == "__main__":
