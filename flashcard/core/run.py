@@ -69,20 +69,21 @@ def push_json(data, filename):
 
     with open(filename, 'w')as f:
         json.dump(data, f) 
-    return
+    return(os.error)
 
 def file_read(filename):
-    print(type(filename))
     file = filename + ".csv"
-    print(file)
-    print(type(file))
-    with open(file, "r") as file:
-        csv_reader = csv.DictReader(file)
-        data_list = []
+    try:
+        with open(file, "r") as file:
+            csv_reader = csv.DictReader(file)
+            data_list = []
+            for row in csv_reader:
+                data_list.append(row)
+        return(data_list)
 
-        for row in csv_reader:
-            data_list.append(row)
-    return(data_list)
+    except FileNotFoundError:
+       print(f"Error: that file {file} doesn't exist")
+    return 
 
 def run(filename=None):
     if filename == None:
@@ -98,6 +99,15 @@ def run(filename=None):
         dict_list = pull_json(filename)
 
     dump_arr = []
+    for dict in dict_list:
+        try:    
+            dict = card(dict['question'],dict['correct_answer'],dict['num_incorrect'],dict['num_correct'])
+        except KeyError:
+            dict = card(dict['question'],dict['correct_answer'])
+        dict.ask()
+        dump_arr.append(dict.dump())
+    push_json(dump_arr, filename)
+
 
 if __name__ == "__main__":
     run()
