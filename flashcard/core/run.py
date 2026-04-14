@@ -53,9 +53,12 @@ def pull_json(filename):
         json_file = filename + ".json"
 
     if os.path.exists(os.path.join(".", json_file)):
-        with open(json_file, 'r') as f:
-            data = json.load(f)
-        return(data)
+        try:
+            with open(json_file, 'r') as f:
+                data = json.load(f)
+            return(data)
+        except json.JSONDecodeError:
+            return(None)
     else:
         return(None)
 
@@ -95,19 +98,6 @@ def run(filename=None):
         dict_list = pull_json(filename)
 
     dump_arr = []
-
-    if pull_json(filename) == None:
-        for dict in dict_list:
-            dict = card(dict['question'],dict['correct_answer'])
-            dict.ask()
-            dump_arr.append(dict.dump())
-        push_json(dump_arr, filename)
-    else:
-        for dict in dict_list:
-            dict = card(dict['question'],dict['correct_answer'],dict['num_incorrect'],dict['num_correct'])
-            dict.ask()
-            dump_arr.append(dict.dump())
-        push_json(dump_arr, filename)
 
 if __name__ == "__main__":
     run()
