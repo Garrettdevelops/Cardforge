@@ -46,8 +46,11 @@ class card():
             self.incorrectly_answered()
         return
 
-def pull_json():
-    json_file = "cards.json"
+def pull_json(filename):
+    if filename == None:
+        json_file = "cards.json"
+    else:
+        json_file = filename + ".json"
 
     if os.path.exists(os.path.join(".", json_file)):
         try:
@@ -59,13 +62,21 @@ def pull_json():
     else:
         return(None)
 
-def push_json(data):
-    with open('cards.json', 'w')as f:
+def push_json(data, filename):
+    if filename == None:
+        filename = 'cards.json'
+    else: filename = filename + ".json"
+
+    with open(filename, 'w')as f:
         json.dump(data, f) 
     return
 
-def file_read():
-    with open("test.csv", "r") as file:
+def file_read(filename):
+    print(type(filename))
+    file = filename + ".csv"
+    print(file)
+    print(type(file))
+    with open(file, "r") as file:
         csv_reader = csv.DictReader(file)
         data_list = []
 
@@ -73,28 +84,21 @@ def file_read():
             data_list.append(row)
     return(data_list)
 
-def main():
-    dict_list = None
+def run(filename=None):
+    if filename == None:
+        filename = "test"
+
+    if '.' in filename:
+        filename_arr = filename.split('.')
+        filename = filename_arr[0] 
+
+    if pull_json(filename) == None:
+        dict_list = file_read(filename)    
+    else: 
+        dict_list = pull_json(filename)
+
     dump_arr = []
 
-    if pull_json() == None:
-        dict_list = file_read()    
-        
-        for dict in dict_list:
-            dict = card(dict['question'],dict['correct_answer'])
-            dict.ask()
-            dump_arr.append(dict.dump())
-           
-    else: 
-        dict_list = pull_json()
-
-        for dict in dict_list: #there is some problems here if JSON exists then we need slightly different logic so we need to split them out to solve the error
-            dict = card(dict['question'],dict['correct_answer'],dict['num_incorrect'],dict['num_correct'])
-            dict.ask()
-            dump_arr.append(dict.dump())
-
-    push_json(dump_arr)
-
 if __name__ == "__main__":
-    main()
+    run()
 

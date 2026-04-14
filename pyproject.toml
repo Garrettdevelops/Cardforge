@@ -1,0 +1,6 @@
+[project]
+name = "flashcard"
+version = "0.1.0"
+
+[project.scripts]
+flashcard = "flashcard.cli.main:main"
