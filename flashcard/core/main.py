@@ -69,7 +69,7 @@ def file_read():
             data_list.append(row)
     return(data_list)
 
-def main():
+def run():
     dict_list = None
     if pull_json() == None:
         dict_list = file_read()    
@@ -84,5 +84,5 @@ def main():
     push_json(dump_arr)
 
 if __name__ == "__main__":
-    main()
+    run()
 
