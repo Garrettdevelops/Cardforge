@@ -37,4 +37,4 @@ A lightweight, flexible flashcard system that:
 
 ## Dev Notes
 
-recently finished tracking state with JSON
+just finished the most basic part of the CLI integration and now need to clean up a lot of this junk and decide what actually needs to be in the GH repo
