@@ -19,7 +19,7 @@ This tool allows anyone — a person, script, or AI — to generate a CSV and in
 
 ## Current Focus
 
-make this a usable CLI tool instead of a basic script with argparse or Click
+Bug fixing and cleaning up the structure of the project 
 
 ## Example Input (CSV)
 
@@ -38,3 +38,7 @@ A lightweight, flexible flashcard system that:
 ## Dev Notes
 
 just finished the most basic part of the CLI integration and now need to clean up a lot of this junk and decide what actually needs to be in the GH repo
+Found a bug because the location of where the data is stored is based on where the CWD is, so that needs fixed.  
+I want to add a results screen soon before I move onto the next step after this.  
+I need to rewrite the README.md to make it reflect the actual structure and give instructions on how to install the package.  
+
