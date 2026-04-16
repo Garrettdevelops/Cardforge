@@ -4,9 +4,11 @@ import os
 
 class card():
     
-    def __init__(self, question, correct_answer, num_incorrect=None, num_correct=None):
+    def __init__(self, question, correct_answer, num_incorrect=None, num_correct=None, id=None):
+        self.id = id
         self.question = question
         self.correct_answer = correct_answer
+
         if num_incorrect == None:
             self.num_incorrect = 0
         else:
@@ -69,23 +71,9 @@ def push_json(data, filename):
 
     with open(filename, 'w')as f:
         json.dump(data, f) 
-    return(os.error)
+    return
 
-def file_read(filename):
-    file = filename + ".csv"
-    try:
-        with open(file, "r") as file:
-            csv_reader = csv.DictReader(file)
-            data_list = []
-            for row in csv_reader:
-                data_list.append(row)
-        return(data_list)
-
-    except FileNotFoundError:
-       print(f"Error: that file {file} doesn't exist")
-    return 
-
-def run(filename=None):
+def run_flashcards(filename=None):
     if filename == None:
         filename = "test"
 
@@ -94,21 +82,19 @@ def run(filename=None):
         filename = filename_arr[0] 
 
     if pull_json(filename) == None:
-        dict_list = file_read(filename)    
+        print("that file has not been initialized yet")
+        return
     else: 
         dict_list = pull_json(filename)
 
     dump_arr = []
     for dict in dict_list:
-        try:    
-            dict = card(dict['question'],dict['correct_answer'],dict['num_incorrect'],dict['num_correct'])
-        except KeyError:
-            dict = card(dict['question'],dict['correct_answer'])
+        dict = card(dict['question'],dict['correct_answer'],dict['num_incorrect'],dict['num_correct'])
         dict.ask()
         dump_arr.append(dict.dump())
     push_json(dump_arr, filename)
 
 
 if __name__ == "__main__":
-    run()
+    run_flashcards()
 
