@@ -1,4 +1,5 @@
 import pathlib
+import platform
 import json
 import os 
 
@@ -48,15 +49,34 @@ class card():
             self.incorrectly_answered()
         return
 
+def find_path():
+
+    operating_system = platform.system() 
+    storage_path = None
+
+    if operating_system == "Darwin":
+        storage_path = pathlib.Path("~/Library/Application Support/flashcard").expanduser()
+    elif operating_system == "Windows":
+        storage_path = pathlib.Path(os.path.expandvars("%APPDATA%/flashcard"))
+    elif operating_system == "Linux":
+        storage_path = pathlib.Path("~/.local/share/flashcard").expanduser()
+
+    storage_path.mkdir(parents=True, exist_ok=True)
+ 
+    return(storage_path)
+
+
+
 def pull_json(filename):
+    storage_path = find_path()
     if filename == None:
-        json_file = "cards.json"
+        json_file = "test.json"
     else:
         json_file = filename + ".json"
 
-    if os.path.exists(os.path.join(".", json_file)):
+    if os.path.exists(os.path.join(str(storage_path),json_file)):
         try:
-            with open(json_file, 'r') as f:
+            with open(os.path.join(str(storage_path),json_file), 'r') as f:
                 data = json.load(f)
             return(data)
         except json.JSONDecodeError:
@@ -64,12 +84,13 @@ def pull_json(filename):
     else:
         return(None)
 
-def push_json(data, filename):
-    if filename == None:
-        filename = 'cards.json'
-    else: filename = filename + ".json"
+def push_json(data, json_file):
+    if json_file == None:
+        json_file = 'test.json'
+    else: json_file = json_file + ".json"
+    storage_path = find_path()
 
-    with open(filename, 'w')as f:
+    with open(os.path.join(str(storage_path),json_file), 'w')as f:
         json.dump(data, f) 
     return
 
