@@ -1,4 +1,4 @@
-# Flashcard CLI (working name)
+# Cardforge
 
 A simple, open-source flashcard tool that converts CSV files into an interactive study system.
 
