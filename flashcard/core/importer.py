@@ -1,5 +1,8 @@
 import csv
+import os
 import json
+import pathlib
+import platform
 
 def file_read(filename):
 
@@ -18,9 +21,11 @@ def file_read(filename):
 
     except FileNotFoundError:
       print(f"Error: that file {file} doesn't exist")
-    return 
+    return
+     
 
 def build_deck(filename):
+    path = initalize_storage()
 
     id_counter = 0
     dump_arr = []
@@ -31,9 +36,38 @@ def build_deck(filename):
         card['id'] = id_counter
         dump_arr.append(card)
         id_counter += 1
-    with open(filename + ".json", "w") as file:
+    with open(os.path.join(str(path), filename + ".json"), "w") as file:
         json.dump(dump_arr, file)
     return
+
+def initalize_storage():
+
+    operating_system = platform.system() 
+    storage_path = None
+
+    if operating_system == "Darwin":
+        storage_path = pathlib.Path("~/Library/Application Support/flashcard").expanduser()
+    elif operating_system == "Windows":
+        storage_path = pathlib.Path(os.path.expandvars("%APPDATA%/flashcard"))
+    elif operating_system == "Linux":
+        storage_path = pathlib.Path("~/.local/share/flashcard").expanduser()
+
+    else:
+        user_choice = input("os could not be understood, what OS are you running? (w)Windows, (m)Mac, (l)Linux, (o)Other:") 
+        if user_choice == "w":
+            storage_path = pathlib.Path(os.path.expandvars("%APPDATA%/flashcard"))
+        elif user_choice == "m":
+            storage_path = pathlib.Path("~/Library/Application Support/flashcard").expanduser()
+        elif user_choice == "l":
+            storage_path = pathlib.Path("~/.local/share/flashcard").expanduser
+        elif user_choice == "o":
+            print("please submit a bug report on github and state your operating system.  I will try to fix the bug as soon as possible.")  
+        else: 
+            print("that was an invalid choice")
+
+    storage_path.mkdir(parents=True, exist_ok=True)
+ 
+    return(storage_path)
 
 if __name__ == "__main__":
     build_deck(input("What file do you wish to initialize?\n"))
