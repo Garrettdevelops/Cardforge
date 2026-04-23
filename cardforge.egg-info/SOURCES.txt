@@ -1,0 +1,11 @@
+README.md
+pyproject.toml
+cardforge.egg-info/PKG-INFO
+cardforge.egg-info/SOURCES.txt
+cardforge.egg-info/dependency_links.txt
+cardforge.egg-info/entry_points.txt
+cardforge.egg-info/top_level.txt
+flashcard/cli/main.py
+flashcard/core/__init__.py
+flashcard/core/importer.py
+flashcard/core/run.py
