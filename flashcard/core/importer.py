@@ -38,6 +38,7 @@ def build_deck(filename):
         id_counter += 1
     with open(os.path.join(str(path), filename + ".json"), "w") as file:
         json.dump(dump_arr, file)
+    print(f"Deck created: {filename}\n ")
     return
 
 def initalize_storage():
