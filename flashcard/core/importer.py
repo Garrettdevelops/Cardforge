@@ -6,9 +6,6 @@ import platform
 
 def file_read(filename):
 
-    if '.' in filename:
-        filename_arr = filename.split('.')
-        filename = filename_arr[0] 
 
     file = filename + ".csv"
     try:
@@ -20,12 +17,17 @@ def file_read(filename):
         return(data_list)
 
     except FileNotFoundError:
-      print(f"Error: that file {file} doesn't exist")
+        print(f"Error: that file {file} doesn't exist")
     return
-     
+
 
 def build_deck(filename):
+    if '.' in filename:
+        filename_arr = filename.split('.')
+        filename = filename_arr[0] 
+
     path = initalize_storage()
+
 
     id_counter = 0
     dump_arr = []
@@ -67,8 +69,8 @@ def initalize_storage():
             print("that was an invalid choice")
 
     storage_path.mkdir(parents=True, exist_ok=True)
- 
+
     return(storage_path)
 
 if __name__ == "__main__":
-    build_deck(input("What file do you wish to initialize?\n"))
+    build_deck()

@@ -7,9 +7,9 @@ def cli():
     pass
 
 @click.command()
-@click.option('--initialize', prompt= 'which file do you want to initialize?')
-def init(initialize):
-    build_deck(initialize)
+@click.argument("csv_file")
+def init(csv_file):
+    build_deck(csv_file)
 
 @click.command()
 @click.option('--input', prompt='Which file should I run?')
