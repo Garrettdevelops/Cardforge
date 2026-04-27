@@ -25,7 +25,9 @@ def file_read(filename):
      
 
 def build_deck(filename):
+
     path = initalize_storage()
+
 
     id_counter = 0
     dump_arr = []
@@ -71,4 +73,4 @@ def initalize_storage():
     return(storage_path)
 
 if __name__ == "__main__":
-    build_deck(input("What file do you wish to initialize?\n"))
+    build_deck()
