@@ -14,4 +14,9 @@ def test_init(tmp_path):
 
     assert json_file.exists()
 
+    incorrect_csv_file = tmp_path / "incorrect.csv"
+    csv_file.write_text("q,a\nhi,hello")
 
+    incorrect_csv_result = runner.invoke(cli, ["init", str(incorrect_csv_file)])
+    assert incorrect_csv_result.exit_code == 1 
+    

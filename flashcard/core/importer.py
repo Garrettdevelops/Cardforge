@@ -15,7 +15,7 @@ def file_read(filename):
             for row in csv_reader:
                 data_list.append(row)
         
-        if "question" and "answer" not in data_list[0]:
+        if "question" and "correct_answer" not in data_list[0]:
             raise Exception("an error occured", "the formatting of the csv is incorrect, please solve the formatting issue", 1)
 
         return(data_list)
@@ -23,7 +23,6 @@ def file_read(filename):
     except FileNotFoundError:
         print(f"Error: that file {file} doesn't exist")
     return
-
 
 def build_deck(filename):
     if '.' in filename:
