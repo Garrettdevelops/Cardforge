@@ -1,4 +1,3 @@
-import pytest
 from click.testing import CliRunner
 from flashcard.cli.main import cli
 from flashcard.core.importer import initalize_storage
@@ -14,3 +13,5 @@ def test_init(tmp_path):
     json_file = tmp_path / "study.json"
 
     assert json_file.exists()
+
+

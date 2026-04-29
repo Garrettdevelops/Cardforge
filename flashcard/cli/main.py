@@ -12,11 +12,11 @@ def init(csv_file):
     build_deck(csv_file)
 
 @click.command()
-@click.option('--input', prompt='Which file should I run?')
+@click.argument("filename")
 
-def run(input):
+def run(filename):
     """Flashcard program that takes a CSV and creates a flashcard""" 
-    run_flashcards(input)
+    run_flashcards(filename)
     return
 
 cli.add_command(init)
