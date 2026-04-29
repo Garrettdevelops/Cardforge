@@ -14,11 +14,11 @@ Cardforge lets you create flashcards your way whether by hand, spreadsheet, or A
 - Track correct/incorrect responses
 - Command-line interface (CLI)
 - Select input CSV via command-line arguments
+- Case insensitive answer checking
 
 ## Roadmap
 
 - [x] Add tests  
-- [ ] Implement case-insensitive answer checking  
 - [ ] Add results screen  
 - [ ] Randomize question order  
 - [ ] Implement spaced repetition  
@@ -26,7 +26,7 @@ Cardforge lets you create flashcards your way whether by hand, spreadsheet, or A
 
 ## Current Focus
 
-Implementing case-insensitice answer checking
+Adding results screen 
 
 ## Example Input (CSV)
 
