@@ -5,7 +5,7 @@ A simple, open-source flashcard tool that converts CSV files into an interactive
 ## Why?
 
 Most flashcard apps are paid or restrictive.  
-Cardforge lets you create flashcards your way—whether by hand, spreadsheet, or AI-generated CSV—and instantly turn them into a study system.
+Cardforge lets you create flashcards your way whether by hand, spreadsheet, or AI-generated CSV, and instantly turn them into a study system.
 
 ## Features (Current)
 
@@ -17,7 +17,7 @@ Cardforge lets you create flashcards your way—whether by hand, spreadsheet, or
 
 ## Roadmap
 
-- [ ] Add tests  
+- [x] Add tests  
 - [ ] Implement case-insensitive answer checking  
 - [ ] Add results screen  
 - [ ] Randomize question order  
@@ -26,7 +26,7 @@ Cardforge lets you create flashcards your way—whether by hand, spreadsheet, or
 
 ## Current Focus
 
-Implementing tests.
+Implementing case-insensitice answer checking
 
 ## Example Input (CSV)
 
