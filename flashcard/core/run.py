@@ -96,7 +96,24 @@ def push_json(data, json_file):
         json.dump(data, f) 
     return
 
-def run_flashcards(filename=None):
+def results(dump_arr):
+
+    title_string = ""
+    value_string = ""
+    counter = 0
+    for dict in dump_arr:
+        if counter == 0:
+            for key in dict.keys():
+                title_string = title_string + " | " + key
+            print(title_string)
+
+        for value in dict.values():
+            value_string = value_string + " | " + str(value)
+        print(value_string)
+
+        counter += 1 
+
+def run_flashcards(filename=None, verbose=False):
     if filename == None:
         filename = "test"
 
@@ -116,8 +133,10 @@ def run_flashcards(filename=None):
         dict.ask()
         dump_arr.append(dict.dump())
     push_json(dump_arr, filename)
+    if  verbose:
+        results(dump_arr)
 
 
 if __name__ == "__main__":
-    run_flashcards(filename)
+    run_flashcards(filename, verbose=False)
 

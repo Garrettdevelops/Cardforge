@@ -1,5 +1,6 @@
 import click 
 from flashcard.core.run import run_flashcards
+from flashcard.core.run import results
 from flashcard.core.importer import build_deck 
 
 @click.group()
@@ -13,10 +14,13 @@ def init(csv_file):
 
 @click.command()
 @click.argument("filename")
-
-def run(filename):
+@click.option("-v", "--verbose", default=False)
+def run(filename, verbose):
     """Flashcard program that takes a CSV and creates a flashcard""" 
-    run_flashcards(filename)
+    if verbose:
+        run_flashcards(filename, verbose)
+    else:
+        run_flashcards(filename)
     return
 
 cli.add_command(init)
