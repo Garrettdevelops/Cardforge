@@ -23,10 +23,12 @@ class card():
         return
 
     def correctly_answered(self):
+        print(f"Correct!")
         self.num_correct += 1
         return
     
     def incorrectly_answered(self):
+        print(f"Incorrect, the correct answer is {self.correct_answer}")
         self.num_incorrect += 1
         return
 
@@ -42,11 +44,11 @@ class card():
         answer = input(f"Quesiton: {self.question}\n")
 
         if answer == self.correct_answer:
-            print(f"Correct!")
             self.correctly_answered()
+            return(True)
         else:
-            print(f"Incorrect, the correct answer is {self.correct_answer}")
             self.incorrectly_answered()
+            return(False)
         return
 
 def find_path():
@@ -117,5 +119,5 @@ def run_flashcards(filename=None):
 
 
 if __name__ == "__main__":
-    run_flashcards()
+    run_flashcards(filename)
 

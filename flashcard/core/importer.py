@@ -14,6 +14,10 @@ def file_read(filename):
             data_list = []
             for row in csv_reader:
                 data_list.append(row)
+        
+        if "question" and "answer" not in data_list[0]:
+            raise Exception("an error occured", "the formatting of the csv is incorrect, please solve the formatting issue", 1)
+
         return(data_list)
 
     except FileNotFoundError:
@@ -73,4 +77,4 @@ def initalize_storage():
     return(storage_path)
 
 if __name__ == "__main__":
-    build_deck()
+    build_deck(filename)
