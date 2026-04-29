@@ -13,25 +13,23 @@ def test_run(tmp_path):
     
     assert json_file.exists()
 
-    correct_test_result = runner.invoke(cli, ["run", "study"], input = "hello") # simulates correct answer
+    correct_test_result = runner.invoke(cli, ["run", str(json_file)], input = "hello") # simulates correct answer
 
     assert correct_test_result.exit_code == 0
     assert "Correct" in correct_test_result.output
 
-    empty_entry_result = runner.invoke(cli, ["run", "study"], input = "\r") # simulates the user pressing enter
+    empty_entry_result = runner.invoke(cli, ["run", str(json_file)], input = "\r") # simulates the user pressing enter
 
     assert empty_entry_result.exit_code == 0 
     assert "Incorrect" in empty_entry_result.output
 
-    incorrect_test_result = runner.invoke(cli, ["run", "study"], input = "WRONG ANSWER") # simulates incorrect answer
+    incorrect_test_result = runner.invoke(cli, ["run", str(json_file)], input = "WRONG ANSWER") # simulates incorrect answer
 
     assert incorrect_test_result.exit_code == 0 
     assert "Incorrect" in incorrect_test_result.output
 
+    all_caps_test_result =  runner.invoke(cli, ["run", str(json_file)], input = "HELLO") # simulates all capitals answer
 
-
-
-
-
-
+    assert all_caps_test_result.exit_code == 0 
+    assert "Correct" in all_caps_test_result.output
 

@@ -41,9 +41,9 @@ class card():
         return(dump_dict)
 
     def ask(self):
-        answer = input(f"Quesiton: {self.question}\n")
+        answer = input(f"Quesiton: {self.question}\n").lower()
 
-        if answer == self.correct_answer:
+        if answer == self.correct_answer.lower():
             self.correctly_answered()
             return(True)
         else:
