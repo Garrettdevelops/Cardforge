@@ -35,6 +35,7 @@ def build_deck(filename):
     id_counter = 0
     dump_arr = []
     data_list = file_read(filename)
+
     for card in data_list:
         card['num_incorrect'] = 0
         card['num_correct'] = 0
@@ -76,4 +77,4 @@ def initalize_storage():
     return(storage_path)
 
 if __name__ == "__main__":
-    build_deck(filename)
+    build_deck(filename="test")
