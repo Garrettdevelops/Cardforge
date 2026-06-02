@@ -1,3 +1,4 @@
+
 import click 
 from flashcard.core.run import run_flashcards
 from flashcard.core.run import results
@@ -31,6 +32,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
 
