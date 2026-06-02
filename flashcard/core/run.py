@@ -1,3 +1,4 @@
+import random
 import pathlib
 import platform
 import json
@@ -114,12 +115,14 @@ def results(dump_arr):
         for value in dict.values():
             value_string = value_string + " | " + str(value)
         print(value_string)
+        value_string= ""
 
 def init_cards(dict_list):
     card_list = []
     for dict in dict_list:
         dict = card(dict['question'],dict['correct_answer'],dict['num_easy_answer'],dict['num_medium_answer'],dict['num_hard_answer'],dict['num_blank_answer'])
         card_list.append(dict)
+        random.shuffle(card_list)
     return(card_list)
 
 def check_answer(card, user_input):
@@ -134,7 +137,7 @@ def check_answer(card, user_input):
                 difficulty_rating = int(difficulty_rating)
 
             if difficulty_rating < 1 or difficulty_rating > 4:
-                print(f"invalid entry {difficulty_rating} cannot be accepted, please input an integer between 1 and 4")
+                print(f"Invalid entry {difficulty_rating} cannot be accepted, please input an integer between 1 and 4")
                 continue
                     
             difficulty_answered = True

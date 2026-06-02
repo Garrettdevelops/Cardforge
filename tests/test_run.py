@@ -27,23 +27,23 @@ def test_run(tmp_path):
 
     num_too_high_result = runner.invoke(cli, ["run", str(json_file)], input = "fake answer \n 5 \n 4") # simulates the user using a number above 4 on the difficulty assesment 
 
-    assert empty_entry_result.exit_code == 0 
-    assert "Invalid entry" in empty_entry_result.output
+    assert num_too_high_result.exit_code == 0 
+    assert "Invalid entry" in num_too_high_result.output
  
 
     num_too_low_result = runner.invoke(cli, ["run", str(json_file)], input = "fake answer \n 0 \n 4") # simulates the user using a number above 4 on the difficulty assesment 
 
-    assert empty_entry_result.exit_code == 0 
-    assert "Invalid entry" in empty_entry_result.output
+    assert num_too_low_result.exit_code == 0 
+    assert "Invalid entry" in num_too_low_result.output
  
 
     num_negative_result = runner.invoke(cli, ["run", str(json_file)], input = "fake answer \n -2 \n 4") # simulates the user using a negative number on the difficulty assesment 
 
-    assert empty_entry_result.exit_code == 0 
-    assert "Invalid entry" in empty_entry_result.output
+    assert num_negative_result.exit_code == 0 
+    assert "Invalid entry" in num_negative_result.output
  
-    text_difficulty_result = runner.invoke(cli, ["run", str(json_file)], input = "fake answer \n 5 \n 4") # simulates the user using text on the difficulty assesment 
+    text_difficulty_result = runner.invoke(cli, ["run", str(json_file)], input = "fake answer \n some text \n 4") # simulates the user using text on the difficulty assesment 
 
-    assert empty_entry_result.exit_code == 0 
-    assert "Invalid entry" in empty_entry_result.output
-    
+    assert text_difficulty_result.exit_code == 0 
+    assert "Invalid entry" in text_difficulty_result.output
+
