@@ -5,28 +5,26 @@ A simple, open-source flashcard tool that converts CSV files into an interactive
 ## Why?
 
 Most flashcard apps are paid or restrictive.  
-Cardforge lets you create flashcards your way whether by hand, spreadsheet, or AI-generated CSV, and instantly turn them into a study system.
+Cardforge lets you create flashcards your way whether by hand, spreadsheet, AI-generated CSV, or even just adding your notes and instantly turn them into a study system.
 
 ## Features (Current)
 
 - Read questions and answers from CSV 
-- Validate user input against answers
 - Track correct/incorrect responses
 - Command-line interface (CLI)
 - Select input CSV via command-line arguments
-- Case insensitive answer checking
 - Verbose option to display a results screen
 
 ## Roadmap
 
 - [x] Add tests  
 - [ ] Randomize question order  
-- [ ] Implement spaced repetition  
+- [ ] Add plain text and markdown note intake support
 - [ ] Upgrade to TUI/GUI  
 
 ## Current Focus
 
-Cleaning up code to make it more readable
+Randomizing question order
 
 ## Example Input (CSV)
 
@@ -83,7 +81,10 @@ Deck created: capitals
 $ flashcard run capitals
 Question: What is the capital of France?
 > Paris
-Correct!
+The correct answer is Paris
+Rate the question's difficulty 1-4, one being instantly remembered and 4 being no idea
+> 1
+
 ```
 
 
