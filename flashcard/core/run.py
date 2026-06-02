@@ -3,48 +3,62 @@ import platform
 import json
 import os 
 
-class deck():
-    def __init__(self, cards, id, scheduler):
-        self.id = id
-        self.cards = cards
-        self.scheduler = scheduler or None
-        return
-
-
-
 class card():
     
-    def __init__(self, question, correct_answer, num_incorrect=None, num_correct=None, id=None):
+    def __init__(self, question, correct_answer, num_easy_answer=None, num_medium_answer=None, num_hard_answer=None, num_blank_answer=None, id=None):
         self.id = id
         self.question = question
         self.correct_answer = correct_answer
 
-        if num_incorrect == None:
-            self.num_incorrect = 0
+        if num_easy_answer == None:
+            self.num_easy_answer = 0
         else:
-            self.num_incorrect = num_incorrect
-       
-        if num_correct == None:
-            self.num_correct = 0
+            self.num_easy_answer = num_easy_answer
+
+        if  num_medium_answer == None:
+            self.num_medium_answer = 0
         else:
-            self.num_correct = num_correct
+            self.num_medium_answer = num_medium_answer
+
+
+        if num_hard_answer == None:
+            self.num_hard_answer = 0
+        else:
+            self.num_hard_answer = num_hard_answer
+
+
+        if num_blank_answer == None:
+            self.num_blank_answer = 0
+        else:
+            self.num_blank_answer = num_blank_answer    
+
 
         return
 
-    def correctly_answered(self):
-        self.num_correct += 1
+    def easy_answer(self):
+        self.num_easy_answer += 1
         return
-    
-    def incorrectly_answered(self):
-        self.num_incorrect += 1
+ 
+    def medium_answer(self):
+        self.num_medium_answer += 1
+        return
+   
+    def hard_answer(self):
+        self.num_hard_answer += 1
+        return
+
+    def blank_answer(self):
+        self.num_blank_answer += 1
         return
 
     def dump(self):
         dump_dict = {}
         dump_dict['question'] = self.question
         dump_dict['correct_answer'] = self.correct_answer
-        dump_dict['num_incorrect'] = self.num_incorrect
-        dump_dict['num_correct'] = self.num_correct
+        dump_dict['num_easy_answer'] = self.num_easy_answer
+        dump_dict['num_medium_answer'] = self.num_medium_answer
+        dump_dict['num_hard_answer'] = self.num_hard_answer
+        dump_dict['num_blank_answer'] = self.num_blank_answer
         return(dump_dict)
 
 
@@ -104,14 +118,30 @@ def results(dump_arr):
 def init_cards(dict_list):
     card_list = []
     for dict in dict_list:
-        dict = card(dict['question'],dict['correct_answer'],dict['num_incorrect'],dict['num_correct'])
+        dict = card(dict['question'],dict['correct_answer'],dict['num_easy_answer'],dict['num_medium_answer'],dict['num_hard_answer'],dict['num_blank_answer'])
         card_list.append(dict)
     return(card_list)
 
 def check_answer(card, user_input):
-    if user_input.lower() == card.correct_answer.lower():
-        return(True)
-    else: return(False)
+    print(f"The correct answer is {card.correct_answer}")
+    print(user_input)
+    difficulty_answered = False
+
+    while difficulty_answered == False:
+        difficulty_rating = input("Rate the question's difficulty 1-4, one being instantly remembered and 4 being no idea\n")
+        try:
+            if type(difficulty_rating) != int:
+                difficulty_rating = int(difficulty_rating)
+
+            if difficulty_rating < 1 or difficulty_rating > 4:
+                print(f"invalid entry {difficulty_rating} cannot be accepted, please input an integer between 1 and 4")
+                continue
+                    
+            difficulty_answered = True
+            return(difficulty_rating)
+
+        except ValueError:
+            print(f"Invalid entry, you must type an integer.  Please try again")
 
 def input_loop(card_list):
 
@@ -119,12 +149,16 @@ def input_loop(card_list):
         print(card.question)
         user_input = input()
         correct_status = check_answer(card, user_input)
-        if correct_status == True:
-            print("Correct!")
-            card.correctly_answered()
-        else:
-            print(f"Incorrect, the correct answer is {card.correct_answer}")
-            card.incorrectly_answered()
+        if correct_status == 1:
+            card.easy_answer()
+        elif correct_status == 2:
+            card.medium_answer()
+
+        elif correct_status == 3:
+            card.hard_answer()
+
+        elif correct_status == 4:
+            card.blank_answer()
 
 def dump_card_list(card_list):
     dump_arr = []

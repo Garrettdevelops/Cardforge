@@ -1,6 +1,7 @@
 from click.testing import CliRunner
 from flashcard.cli.main import cli
 
+
 def test_run(tmp_path):
     runner = CliRunner()
 
@@ -13,23 +14,36 @@ def test_run(tmp_path):
     
     assert json_file.exists()
 
-    correct_test_result = runner.invoke(cli, ["run", str(json_file)], input = "hello") # simulates correct answer
+    easy_answer_result = runner.invoke(cli, ["run", str(json_file), "--verbose=True"], input = "hello \n 1" )# simulates easy answer
 
-    assert correct_test_result.exit_code == 0
-    assert "Correct" in correct_test_result.output
+    assert easy_answer_result.exit_code == 0
+    assert "1 | 0 | 0 | 0" in easy_answer_result.output
 
-    empty_entry_result = runner.invoke(cli, ["run", str(json_file)], input = "\r") # simulates the user pressing enter
+    empty_entry_result = runner.invoke(cli, ["run", str(json_file)], input = "fake answer \n \r \n 4") # simulates the user pressing enter on the difficulty assesment 
 
     assert empty_entry_result.exit_code == 0 
-    assert "Incorrect" in empty_entry_result.output
+    assert "Invalid entry" in empty_entry_result.output
 
-    incorrect_test_result = runner.invoke(cli, ["run", str(json_file)], input = "WRONG ANSWER") # simulates incorrect answer
 
-    assert incorrect_test_result.exit_code == 0 
-    assert "Incorrect" in incorrect_test_result.output
+    num_too_high_result = runner.invoke(cli, ["run", str(json_file)], input = "fake answer \n 5 \n 4") # simulates the user using a number above 4 on the difficulty assesment 
 
-    all_caps_test_result =  runner.invoke(cli, ["run", str(json_file)], input = "HELLO") # simulates all capitals answer
+    assert empty_entry_result.exit_code == 0 
+    assert "Invalid entry" in empty_entry_result.output
+ 
 
-    assert all_caps_test_result.exit_code == 0 
-    assert "Correct" in all_caps_test_result.output
+    num_too_low_result = runner.invoke(cli, ["run", str(json_file)], input = "fake answer \n 0 \n 4") # simulates the user using a number above 4 on the difficulty assesment 
 
+    assert empty_entry_result.exit_code == 0 
+    assert "Invalid entry" in empty_entry_result.output
+ 
+
+    num_negative_result = runner.invoke(cli, ["run", str(json_file)], input = "fake answer \n -2 \n 4") # simulates the user using a negative number on the difficulty assesment 
+
+    assert empty_entry_result.exit_code == 0 
+    assert "Invalid entry" in empty_entry_result.output
+ 
+    text_difficulty_result = runner.invoke(cli, ["run", str(json_file)], input = "fake answer \n 5 \n 4") # simulates the user using text on the difficulty assesment 
+
+    assert empty_entry_result.exit_code == 0 
+    assert "Invalid entry" in empty_entry_result.output
+    

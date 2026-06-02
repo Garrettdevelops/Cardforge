@@ -1,3 +1,4 @@
+
 import csv
 import os
 import json
@@ -37,8 +38,11 @@ def build_deck(filename):
     data_list = file_read(filename)
 
     for card in data_list:
-        card['num_incorrect'] = 0
-        card['num_correct'] = 0
+        card['num_easy_answer'] = 0
+        card['num_easy_answer'] = 0
+        card['num_medium_answer'] = 0
+        card['num_hard_answer'] = 0
+        card['num_blank_answer'] = 0
         card['id'] = id_counter
         dump_arr.append(card)
         id_counter += 1
@@ -78,3 +82,4 @@ def initalize_storage():
 
 if __name__ == "__main__":
     build_deck(filename="test")
+
